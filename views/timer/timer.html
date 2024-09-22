@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Timer - TimeToCube</title>
+		<link rel="stylesheet" href="/public/styles/timer.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+			integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+	</head>
+	<body>
+		<div id="sidebar">
+			<h3>TimeToCube</h3>
+
+			<div class="nav-links">
+				<a href="/views/timer/timer.html" class="nav-link actual-page"
+					><i class="fa-solid fa-stopwatch"></i> Timer</a
+				>
+				<a href="/views/timer/times.html" class="nav-link"
+					><i class="fa-solid fa-list"></i>Times</a
+				>
+				<a id="signout" class="nav-link"
+					><i class="fa-solid fa-power-off"></i> Sign-out</a
+				>
+				<a href="/views/timer/Account.html" class="nav-link"
+					><i class="fa-solid fa-user"></i> Account</a
+				>
+			</div>
+		</div>
+		<div class="content">
+			<div class="timer">
+				<h1 id="time">
+					<span id="segundos">0</span><span id="dot">.</span
+					><span id="milisegundos">00</span>
+				</h1>
+			</div>
+			<div class="side-statistics">
+				<div class="history-times"></div>
+
+				<div class="statistics">
+					<div class="pb">
+						<span class="title">Best</span>
+						<span id="PB" class="data"> - </span>
+					</div>
+					<div class="worst">
+						<span class="title">Worst</span>
+						<span id="worst" class="data"> - </span>
+					</div>
+					<div class="avg">
+						<span class="title">avg</span>
+						<span id="avg" class="data"> - </span>
+					</div>
+					<div class="actual">
+						<span class="title">Actual</span>
+						<span id="avg" class="data"> - </span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/public/scripts/timer/timer.js" type="module"></script>
+		<script></script>
+	</body>
+</html>
