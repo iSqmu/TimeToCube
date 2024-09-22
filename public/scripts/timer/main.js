@@ -6,8 +6,9 @@ import {
 	get,
 	child,
 	update,
-	remove
+	remove,
 } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js';
+
 //* Firebase Config
 const firebaseConfig = {
 	apiKey: 'AIzaSyD_f3a7epjbkpcpuOVLas3ZcCbfswOW4XM',
@@ -38,4 +39,17 @@ function deleteTime(tid) {
 	update(recordRef, null);
 }
 
-export { initializeApp, getDatabase, ref, set, get, child, update, app, db, $, $$, cookie};
+export {
+	initializeApp,
+	getDatabase,
+	ref,
+	set,
+	get,
+	child,
+	update,
+	app,
+	db,
+	$,
+	$$,
+	cookie,
+};

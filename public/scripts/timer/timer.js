@@ -13,6 +13,8 @@ import {
 	cookie,
 } from './main.js';
 import sweetalert2 from 'https://cdn.jsdelivr.net/npm/sweetalert2/+esm';
+import { randomScrambleForEvent } from 'https://cdn.cubing.net/js/cubing/scramble';
+import { TwistyAlgViewer } from 'https://cdn.cubing.net/js/cubing/twisty';
 
 const $time = $('#time');
 const $masDos = $('#masDos');
@@ -20,6 +22,7 @@ const $dnf = $('#dnf');
 const $delete = $('#delete');
 const $history = $('.history-times');
 const $logout = $('#sidebar #signout');
+const $scramble = $('.scramble');
 const tiempoT = Date.now();
 const hoy = new Date(tiempoT);
 let timeId = () => {
@@ -37,6 +40,13 @@ let ns = [];
 let best, worst;
 let dnf = false;
 let masDos = false;
+let scramble;
+let twistyPlayer = document.querySelector('twisty-player');
+
+$scramble.innerHTML = await randomScrambleForEvent('333');
+scramble = $scramble.innerHTML;
+twistyPlayer.alg = scramble;
+
 function getCookie(cname) {
 	const value = `; ${document.cookie}`;
 	const parts = value.split(`; ${cname}=`);
@@ -121,16 +131,19 @@ function inicio() {
 	started = true;
 }
 
-function parar() {
+async function parar() {
 	clearInterval(control);
 	started = false;
 	time = `${segundos}.${centesimas}`;
 	id = timeId();
 	times.push(time);
+	$scramble.innerHTML = await randomScrambleForEvent('333');
+	scramble = $scramble.innerHTML;
+	twistyPlayer.alg = scramble;
+
 	times.sort((a, b) => {
 		return a - b;
 	});
-
 	if (i == 1) {
 		$history.innerHTML = ``;
 	}
@@ -247,8 +260,23 @@ document.addEventListener('keydown', (e) => {
 
 $logout.addEventListener('click', (e) => {
 	e.preventDefault();
-	document.cookie = 'loged= ; expires= Thu, 01 Jan 1970 00:00:01 UTC; path=/;';
-	window.location.href = '/index.html';
+	sweetalert2
+		.fire({
+			title: 'Estás seguro de cerrar sesión?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			cancelButtonText: 'No, volver',
+			confirmButtonText: 'Si, cerrar sesión',
+		})
+		.then((result) => {
+			if (result.isConfirmed) {
+				document.cookie =
+					'loged= ; expires= Thu, 01 Jan 1970 00:00:01 UTC; path=/;';
+				window.location.href = '/index.html';
+			}
+		});
 });
 
 $history.addEventListener('click', (e) => {

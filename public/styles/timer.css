@@ -76,6 +76,7 @@ body {
 	justify-content: space-evenly;
 	cursor: pointer;
 	transition: 0.5s ease;
+	margin-top: 0;
 }
 
 .timer .options-timer {
@@ -103,6 +104,18 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	margin-right: 5px;
+}
+
+.scramble {
+	font-size: 20px;
+}
+
+twisty-player {
+	width: 200px;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 60%;
 }
 
 /** Histoy Times **/
@@ -174,8 +187,4 @@ body {
 
 .nav-link i {
 	margin-right: 20px;
-}
-
-.active {
-	color: #00b95d;
 }
