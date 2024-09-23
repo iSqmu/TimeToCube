@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Times - TimeToCube</title>
+		<link rel="stylesheet" href="/public/styles/times.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+			integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<script type="module">
+			import { randomScrambleForEvent } from 'https://cdn.cubing.net/js/cubing/scramble';
+			import { TwistyAlgViewer } from 'https://cdn.cubing.net/js/cubing/twisty';
+
+			document
+				.querySelectorAll('twisty-player')
+				.forEach((e) => (e.alg = randomScrambleForEvent('333')));
+		</script>
+	</head>
+	<body>
+		<div class="prev-time">
+			<h1>0.01</h1>
+			<p>
+				<b>scramble:</b>
+				<span class="previ prev-scramble"
+					>U' B' U2 F B R' B L2 F2 U' B2 D F2 U2 B2 R2 U2 B2 D B D2</span
+				>
+			</p>
+			<p>
+				<b>date:</b>
+				<span class="previ prev-date">Mon, 23 Sep 2024 03:11:54 GMT</span>
+			</p>
+			<p>
+				<b>penalization: </b>
+				<span class="previ prev-penal">DNF</span>
+			</p>
+			<twisty-player
+				visualization="3D"
+				background="none"
+				control-panel="none"
+				class="prev-3D"
+			></twisty-player>
+			<button class="close">Cerrar</button>
+		</div>
+		<div id="sidebar">
+			<h3>TimeToCube</h3>
+			Mon, 23 Sep 2024 03:11:54 GMT
+
+			<div class="nav-links">
+				<a href="/views/timer/timer.html" class="nav-link actual-page"
+					><i class="fa-solid fa-stopwatch"></i> Timer</a
+				>
+				<a href="/views/timer/times.html" class="nav-link"
+					><i class="fa-solid fa-list"></i>Times</a
+				>
+				<a id="signout" class="nav-link"
+					><i class="fa-solid fa-power-off"></i> Sign-out</a
+				>
+				<a href="/views/timer/Account.html" class="nav-link"
+					><i class="fa-solid fa-user"></i> Account</a
+				>
+			</div>
+		</div>
+		<div class="content">
+			<div class="time">
+				<h2 class="tTitle">0.01</h2>
+				<p class="scramble">
+					U' B' U2 F B R' B L2 F2 U' B2 D F2 U2 B2 R2 U2 B2 D B D2
+				</p>
+				<twisty-player
+					visualization="2D"
+					background="none"
+					control-panel="none"
+				></twisty-player>
+				<div class="penalizations">
+					<p class="dnf penalization-disabled">DNF</p>
+					<p class="masDos penalization-disabled">+2</p>
+				</div>
+			</div>
+			<div class="time">
+				<h2 class="tTitle">0.01</h2>
+				<p class="scramble">
+					U' B' U2 F B R' B L2 F2 U' B2 D F2 U2 B2 R2 U2 B2 D B D2
+				</p>
+				<twisty-player
+					visualization="2D"
+					background="none"
+					control-panel="none"
+				></twisty-player>
+				<div class="penalizations">
+					<p class="dnf penalization-disabled">DNF</p>
+					<p class="masDos penalization-disabled">+2</p>
+				</div>
+			</div>
+			<div class="time">
+				<h2 class="tTitle">0.01</h2>
+				<p class="scramble">
+					U' B' U2 F B R' B L2 F2 U' B2 D F2 U2 B2 R2 U2 B2 D B D2
+				</p>
+				<twisty-player
+					visualization="2D"
+					background="none"
+					control-panel="none"
+				></twisty-player>
+				<div class="penalizations">
+					<p class="dnf penalization-disabled">DNF</p>
+					<p class="masDos penalization-disabled">+2</p>
+				</div>
+			</div>
+			<div class="time">
+				<h2 class="tTitle">0.01</h2>
+				<p class="scramble">
+					U' B' U2 F B R' B L2 F2 U' B2 D F2 U2 B2 R2 U2 B2 D B D2
+				</p>
+				<twisty-player
+					visualization="2D"
+					background="none"
+					control-panel="none"
+				></twisty-player>
+				<div class="penalizations">
+					<p class="dnf penalization-disabled">DNF</p>
+					<p class="masDos penalization-disabled">+2</p>
+				</div>
+			</div>
+			<div class="time">
+				<h2 class="tTitle">0.01</h2>
+				<p class="scramble">
+					U' B' U2 F B R' B L2 F2 U' B2 D F2 U2 B2 R2 U2 B2 D B D2
+				</p>
+				<twisty-player
+					visualization="2D"
+					background="none"
+					control-panel="none"
+				></twisty-player>
+				<div class="penalizations">
+					<p class="dnf penalization-disabled">DNF</p>
+					<p class="masDos penalization-disabled">+2</p>
+				</div>
+			</div>
+			<div class="time">
+				<h2 class="tTitle">0.01</h2>
+				<p class="scramble">
+					U' B' U2 F B R' B L2 F2 U' B2 D F2 U2 B2 R2 U2 B2 D B D2
+				</p>
+				<twisty-player
+					visualization="2D"
+					background="none"
+					control-panel="none"
+				></twisty-player>
+				<div class="penalizations">
+					<p class="dnf penalization-disabled">DNF</p>
+					<p class="masDos penalization-disabled">+2</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

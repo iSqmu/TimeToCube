@@ -74,8 +74,9 @@ get(ref(db, 'times/' + uid)).then((snapshot) => {
 			tiempos.push({
 				time: registros[registro].time,
 				id: registros[registro].id,
+				dnf: registros[registro].dnf,
+				masDos: registros[registro].plusTwo,
 			});
-
 			times.push(registros[registro].time);
 		}
 
@@ -83,23 +84,42 @@ get(ref(db, 'times/' + uid)).then((snapshot) => {
 			return a - b;
 		});
 
-		best = times[0];
-		worst = times[times.length - 1];
-
 		if (times.length > 4) {
 			let suma = 0;
 			times.forEach((x) => (suma += parseFloat(x)));
 			$('.avg .data').innerHTML = ((suma - best) / times.length).toFixed(2);
 		}
+		best = times[0];
+		worst = times[times.length - 1];
 
 		$('.pb .data').innerHTML = best;
 		$('.worst .data').innerHTML = worst;
 
 		for (let x = 0; x < tiempos.length; x++) {
+			let dnf = '';
+			let masDos = '';
+			let n;
+			if (tiempos[x].dnf) {
+				dnf = 'dnf';
+				n = 'DNF';
+				times.splice(times.indexOf(tiempos[x].time), 1);
+				best = times[0];
+				worst = times[times.length - 1];
+				$('.pb .data').innerHTML = best;
+				$('.worst .data').innerHTML = worst;
+			} else {
+				n = tiempos[x].time;
+			}
+			if (tiempos[x].masDos) {
+				masDos = 'masDos';
+			}
+
 			$history.innerHTML += `
-			<div class="time" id="t${tiempos[x].id}" data-time="${tiempos[x].time}">
+			<div class="time ${dnf} ${masDos}" id="t${tiempos[x].id}" data-time="${
+				tiempos[x].time
+			}">
 			<span class="index">${i++}.</span>
-				<span class="number">${tiempos[x].time}</span>
+				<span class="number">${n}</span>
 				<div id="options">
 					<button class="options" id="masDos"><span id="masDos">+2</span></button>
 					<button class="options" id="dnf">
@@ -137,9 +157,6 @@ async function parar() {
 	time = `${segundos}.${centesimas}`;
 	id = timeId();
 	times.push(time);
-	$scramble.innerHTML = await randomScrambleForEvent('333');
-	scramble = $scramble.innerHTML;
-	twistyPlayer.alg = scramble;
 
 	times.sort((a, b) => {
 		return a - b;
@@ -149,7 +166,7 @@ async function parar() {
 	}
 
 	$history.innerHTML += `
-			<div class="time" id="t${id}" data-time="${time}">
+			<div class="time " id="t${id}" data-time="${time}">
 				<span class="index">${i++}.</span>
 				<span class="number">${time}</span>
 				<div id="options">
@@ -184,8 +201,9 @@ async function parar() {
 	}
 
 	$('.actual .data').innerHTML = time;
+	
 
-	get(ref(db, 'users/'))
+	await get(ref(db, 'users/'))
 		.then((snapshot) => {
 			if (snapshot.exists()) {
 				let users = snapshot.val();
@@ -202,6 +220,7 @@ async function parar() {
 						date: hoy.toUTCString(),
 						dnf: dnf,
 						plusTwo: masDos,
+						scramble: scramble,
 					});
 				}
 			}
@@ -209,6 +228,9 @@ async function parar() {
 		.catch((error) => {
 			console.log(error);
 		});
+	$scramble.innerHTML = await randomScrambleForEvent('333');
+	scramble = $scramble.innerHTML;
+	twistyPlayer.alg = scramble;
 }
 
 function reiniciar() {
@@ -372,6 +394,7 @@ $history.addEventListener('click', (e) => {
 
 			if (!e.target.closest('.time').classList.contains('masDos')) {
 				masDos = true;
+				e.target.closest('.time').classList.add('masDos');
 				if (e.target.closest('.time').classList.contains('dnf')) {
 					return;
 				}
@@ -398,6 +421,12 @@ $history.addEventListener('click', (e) => {
 				$('.worst .data').innerHTML = times[times.length - 1];
 
 				e.target.closest('.time').dataset.time = newTime;
+				e.target.closest('.time').querySelector('.number').style.color =
+					'#fc7200';
+				e.target.closest('.time').querySelector('.number').style.textShadow =
+					'0 0 3px #fc7200';
+				e.target.style.color = '#fc7200';
+				e.target.style.textShadow = '0 0 3px #fc7200';
 
 				if (
 					$('.actual .data').innerText ==
@@ -411,26 +440,8 @@ $history.addEventListener('click', (e) => {
 					tFloat + 2
 				).toFixed(2);
 
-				e.target.closest('.time').querySelector('.number').style.color =
-					'#fc7200';
-
-				e.target.closest('.time').querySelector('.number').style.textShadow =
-					'0 0 3px #fc7200';
-
-				e.target.style.color = '#fc7200';
-				e.target.style.textShadow = '0 0 3px #fc7200';
-
 				if (e.target.closest('.time').classList.contains('dnf')) {
 					e.target.closest('.time').querySelector('.number').innerHTML = 'DNF';
-
-					e.target.closest('.time').querySelector('.number').style.color =
-						'#fc1700';
-
-					e.target.closest('.time').querySelector('.number').style.textShadow =
-						'0 0 3px #fc1700';
-
-					e.target.style.color = '#eee';
-					e.target.style.textShadow = 'none';
 
 					$('.pb .data').innerHTML = times[0];
 					$('.worst .data').innerHTML = times[times.length - 1];
@@ -449,6 +460,8 @@ $history.addEventListener('click', (e) => {
 				times.sort((a, b) => {
 					return a - b;
 				});
+
+				e.target.closest('.time').classList.remove('masDos');
 
 				update(recordRef, {
 					time: newTime,
@@ -504,13 +517,10 @@ $history.addEventListener('click', (e) => {
 				$('.worst .data').innerHTML = times[times.length - 1];
 
 				e.target.closest('.time').querySelector('.number').innerHTML = 'DNF';
-
 				e.target.closest('.time').querySelector('.number').style.color =
 					'#fc1700';
-
 				e.target.closest('.time').querySelector('.number').style.textShadow =
 					'0 0 3px #fc1700';
-
 				e.target.style.color = '#fc1700';
 				e.target.style.textShadow = '0 0 3px #fc1700';
 

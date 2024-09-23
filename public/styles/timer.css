@@ -188,3 +188,15 @@ twisty-player {
 .nav-link i {
 	margin-right: 20px;
 }
+
+.masDos .number,
+.masDos #masDos {
+	color: #fc7200;
+	text-shadow: 0 0 3px #fc7200;
+}
+
+.dnf .number,
+.dnf #dnf {
+	color: #fc1700;
+	text-shadow: 0 0 3px #fc1700;
+}
