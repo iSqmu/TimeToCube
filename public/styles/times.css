@@ -79,6 +79,12 @@ body {
 	padding: 10px;
 	overflow: hidden;
 	position: relative;
+	cursor: pointer;
+	transition: 0.5s ease-in-out;
+	&:hover {
+		transform: scale(1.05);
+		box-shadow: inset 0 0 20px #eee;
+	}
 }
 
 .time .tTitle {
@@ -104,7 +110,6 @@ twisty-player {
 .dnf {
 	color: #fc1700;
 	text-shadow: 0 0 5px #fc1700;
-	opacity: 1;
 }
 
 .masDos {
@@ -112,8 +117,8 @@ twisty-player {
 	text-shadow: 0 0 5px #fc7200;
 }
 
-.penalization-disabled {
-	opacity: 0.4;
+.time .penalization-disabled {
+	display: none;
 }
 
 .prev-time {
@@ -131,7 +136,7 @@ twisty-player {
 	border: 4px solid #eee;
 	border-radius: 10px;
 	box-shadow: 0 0 20px #242424;
-	transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease;
 	display: none;
 }
 
@@ -175,7 +180,7 @@ twisty-player {
 	border-radius: 50%;
 	top: -200px;
 	left: -50px;
-	transition: all 0.5s ease-in-out;
+	transition: all 0.2s ease-in-out;
 }
 
 .prev-time .close:hover::after {

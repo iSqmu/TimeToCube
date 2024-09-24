@@ -103,10 +103,16 @@ get(ref(db, 'times/' + uid)).then((snapshot) => {
 				dnf = 'dnf';
 				n = 'DNF';
 				times.splice(times.indexOf(tiempos[x].time), 1);
-				best = times[0];
-				worst = times[times.length - 1];
-				$('.pb .data').innerHTML = best;
-				$('.worst .data').innerHTML = worst;
+
+				if (tiempos.length == 1) {
+					$('.pb .data').innerHTML = '-';
+					$('.worst .data').innerHTML = '-';
+				} else {
+					best = times[0];
+					worst = times[times.length - 1];
+					$('.pb .data').innerHTML = best;
+					$('.worst .data').innerHTML = worst;
+				}
 			} else {
 				n = tiempos[x].time;
 			}
@@ -134,7 +140,7 @@ get(ref(db, 'times/' + uid)).then((snapshot) => {
 		}
 	} else {
 		$history.innerHTML = `
-		<center>
+				<center>
 				<div>
 				<h2>No hay registros</h2>
 				</div>
@@ -161,13 +167,14 @@ async function parar() {
 	times.sort((a, b) => {
 		return a - b;
 	});
+
 	if (i == 1) {
 		$history.innerHTML = ``;
 	}
 
 	$history.innerHTML += `
-			<div class="time " id="t${id}" data-time="${time}">
-				<span class="index">${i++}.</span>
+	<div class="time " id="t${id}" data-time="${time}">
+	<span class="index">${i++}.</span>
 				<span class="number">${time}</span>
 				<div id="options">
 					<button class="options" id="masDos"><span id="masDos">+2</span></button>
@@ -201,7 +208,6 @@ async function parar() {
 	}
 
 	$('.actual .data').innerHTML = time;
-	
 
 	await get(ref(db, 'users/'))
 		.then((snapshot) => {
@@ -221,6 +227,7 @@ async function parar() {
 						dnf: dnf,
 						plusTwo: masDos,
 						scramble: scramble,
+						index: i - 1,
 					});
 				}
 			}
@@ -318,12 +325,17 @@ $history.addEventListener('click', (e) => {
 				.then((result) => {
 					if (result.isConfirmed) {
 						let tid = e.target.closest('.time').id;
-						times.splice(
-							times.indexOf(
-								e.target.closest('.time').querySelector('.number').innerText,
-							),
-							1,
-						);
+
+						if (e.target.closest('.time').classList.contains('dnf')) {
+							e.target.closest('.time').remove();
+						} else {
+							times.splice(
+								times.indexOf(
+									e.target.closest('.time').querySelector('.number').innerText,
+								),
+								1,
+							);
+						}
 
 						times.sort((a, b) => {
 							return a - b;
@@ -384,6 +396,9 @@ $history.addEventListener('click', (e) => {
 
 			break;
 		case 'masDos':
+			if (e.target.closest('.time').classList.contains('dnf')) {
+				return;
+			}
 			let id = e.target.closest('.time').id;
 			recordRef = ref(db, `times/${getCookie('uid')}/${id}`);
 			let newTime;
@@ -504,6 +519,9 @@ $history.addEventListener('click', (e) => {
 						e.target.closest('.time').querySelector('.number').innerHTML,
 					),
 					1,
+				);
+				console.log(
+					e.target.closest('.time').querySelector('.number').innerHTML,
 				);
 
 				update(
